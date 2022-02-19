@@ -7,6 +7,7 @@
 
 /****************************** Included files ********************************/
 #include <stdint.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 /******************************** Definition **********************************/
@@ -61,10 +62,13 @@ uint8_t front_var_queue(void);
 bool is_empty_var_queue(void);
 /********************************* Entry point ********************************/
 int main() {
+    printf("Test with fixed length stack\n");
     create_fixed_length_stack();
     for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
+        printf("%4d ", (48 + i));
         DISCARD_RETURN(push_fix_stack(48 + i));
     }
+    printf("\n");
 
 #ifdef ADDITION_TEST
     printf("%d\n", pop_fix_stack());
@@ -78,13 +82,16 @@ int main() {
     printf("The top of fixed-length stack: %d\n", top_fix_stack());
     printf("The content of fixed-length stack:\n");
     while (!is_empty_fix_stack()) {
-        printf("%d\n", pop_fix_stack());
+        printf("%4d ", pop_fix_stack());
     }
 /*----------------------------------------------------------------------------*/
+    printf("\n\n\rTest with fixed length queue\n");
     create_fixed_length_queue();
     for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
+        printf("%4d ", (48 + i));
         DISCARD_RETURN(push_fix_queue(48 + i));
     }
+    printf("\n");
 
 #ifdef ADDITION_TEST
     printf("%d\n", pop_fix_queue());
@@ -98,13 +105,16 @@ int main() {
     printf("The front of fixed-length queue: %d\n", front_fix_queue());
     printf("The content of fixed-length queue:\n");
     while (!is_empty_fix_queue()) {
-        printf("%d\n", pop_fix_queue());
+        printf("%4d ", pop_fix_queue());
     }
 /*----------------------------------------------------------------------------*/
+    printf("\n\n\rTest with variable length stack\n");
     if (create_variable_length_stack(STACK_LENGTH)) {
         for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
+            printf("%4d ", (48 + i));
             DISCARD_RETURN(push_var_stack(48 + i));
         }
+        printf("\n");
 
 #ifdef ADDITION_TEST
         printf("%d\n", pop_var_stack());
@@ -118,16 +128,19 @@ int main() {
         printf("The top of variable-length stack: %d\n", top_var_stack());
         printf("The content of variable-length stack:\n");
         while (!is_empty_var_stack()) {
-            printf("%d\n", pop_var_stack());
+            printf("%4d ", pop_var_stack());
         }
-
         free(variable_length_stack);
     }
+    else printf("The stack was not created");
 /*----------------------------------------------------------------------------*/
+    printf("\n\n\rTest with variable length queue\n");
     if (create_variable_length_queue(STACK_LENGTH)) {
         for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
+            printf("%4d ", (48 + i));
             DISCARD_RETURN(push_var_queue(48 + i));
         }
+        printf("\n");
 
 #ifdef ADDITION_TEST
         printf("%d\n", pop_var_queue());
@@ -141,10 +154,12 @@ int main() {
         printf("The front of variable-length queue: %d\n", front_var_queue());
         printf("The content of variable-length queue:\n");
         while (!is_empty_var_queue()) {
-            printf("%d\n", pop_var_queue());
+            printf("%4d ", pop_var_queue());
         }
+        printf("\n");
         free(variable_length_queue);
     }
+    else printf("The queue was not created\n");
 /*----------------------------------------------------------------------------*/
     getchar();
     return 0;
@@ -177,7 +192,7 @@ bool push_fix_queue(uint8_t item) {
         }
         else {
             fixed_length_queue_tail = old_fixed_length_queue_tail;
-            printf("Buffer overflow\n");
+            printf("\n\r>>>Warning!<<< Buffer overflow\n");
         }
     }
     return result;
@@ -234,7 +249,7 @@ bool push_fix_stack(uint8_t item) {
         }
         else {
             fixed_length_stack_top = QUEUE_LENGTH - 1;
-            printf("Buffer overflow\n");
+            printf("\n\r>>>Warning!<<< Buffer overflow\n");
         }
     }
     return result;
@@ -291,7 +306,7 @@ bool push_var_stack(uint8_t item) {
         }
         else {
             variable_length_stack_top = vl_stack_length - 1;
-            printf("Buffer overflow\n");
+            printf("\n\r>>>Warning!<<< Buffer overflow\n");
         }
     }
     return result;
@@ -352,7 +367,7 @@ bool push_var_queue(uint8_t item) {
         }
         else {
             variable_length_queue_tail = old_variable_length_queue_tail;
-            printf("Buffer overflow\n");
+            printf("\n\r>>>Warning!<<< Buffer overflow\n");
         }
     }
     return result;
