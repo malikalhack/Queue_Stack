@@ -1,4 +1,11 @@
-﻿/****************************** Included files ********************************/
+﻿/**
+ * @file    main.cpp
+ * @version 1.0.0
+ * @authors Anton Chernov
+ * @date    16/02/2022
+ */
+
+/****************************** Included files ********************************/
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,11 +15,11 @@
 
 #define QUEUE_LENGTH    (10)
 #define STACK_LENGTH    (10)
-/******************************************************************************/
+/******************************* Global variables *****************************/
 uint8_t fixed_length_stack[STACK_LENGTH];
 volatile uint8_t fixed_length_stack_top;
 volatile bool empty_fixed_length_stack;
-
+/*----------------------------------------------------------------------------*/
 uint8_t fixed_length_queue[QUEUE_LENGTH];
 volatile uint8_t fixed_length_queue_front;
 volatile uint8_t fixed_length_queue_tail;
@@ -22,37 +29,37 @@ uint8_t *variable_length_stack;
 uint8_t vl_stack_length;
 volatile uint8_t variable_length_stack_top;
 volatile bool empty_variable_length_stack;
-
+/*----------------------------------------------------------------------------*/
 uint8_t *variable_length_queue;
 uint8_t vl_queue_length;
 volatile uint8_t variable_length_queue_front;
 volatile uint8_t variable_length_queue_tail;
 volatile bool empty_variable_length_queue;
-/*----------------------------------------------------------------------------*/
+/*************************** Function's prototypes ****************************/
 void create_fixed_length_stack(void);
 bool push_fix_stack(uint8_t);
 uint8_t pop_fix_stack(void);
 uint8_t top_fix_stack(void);
 bool is_empty_fix_stack(void);
-
+/*----------------------------------------------------------------------------*/
 void create_fixed_length_queue(void);
 bool push_fix_queue(uint8_t);
 uint8_t pop_fix_queue(void);
 uint8_t front_fix_queue(void);
 bool is_empty_fix_queue(void);
-
+/*----------------------------------------------------------------------------*/
 bool create_variable_length_stack(uint8_t);
 bool push_var_stack(uint8_t);
 uint8_t pop_var_stack(void);
 uint8_t top_var_stack(void);
 bool is_empty_var_stack(void);
-
+/*----------------------------------------------------------------------------*/
 bool create_variable_length_queue(uint8_t);
 bool push_var_queue(uint8_t);
 uint8_t pop_var_queue(void);
 uint8_t front_var_queue(void);
 bool is_empty_var_queue(void);
-/******************************************************************************/
+/********************************* Entry point ********************************/
 int main() {
     create_fixed_length_stack();
     for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
@@ -142,7 +149,7 @@ int main() {
     getchar();
     return 0;
 }
-
+/********************* Application Programming Interface **********************/
 void create_fixed_length_queue(void) {
     for (uint8_t i = 0; i < QUEUE_LENGTH; i++) {
         fixed_length_queue[i] = 0;
@@ -151,7 +158,7 @@ void create_fixed_length_queue(void) {
     fixed_length_queue_tail = 0;
     empty_fixed_length_queue = true;
 }
-
+/******************************************************************************/
 bool push_fix_queue(uint8_t item) {
     bool result = false;
     if (empty_fixed_length_queue) {
@@ -161,7 +168,9 @@ bool push_fix_queue(uint8_t item) {
     }
     else {
         uint8_t old_fixed_length_queue_tail = fixed_length_queue_tail++;
-        if (fixed_length_queue_tail >= QUEUE_LENGTH) fixed_length_queue_tail = 0;
+        if (fixed_length_queue_tail >= QUEUE_LENGTH) {
+            fixed_length_queue_tail = 0;
+        }
         if (fixed_length_queue_tail != fixed_length_queue_front) {
             fixed_length_queue[fixed_length_queue_tail] = item;
             result = true;
@@ -173,7 +182,7 @@ bool push_fix_queue(uint8_t item) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t pop_fix_queue(void) {
     uint8_t result = 0;
     if (!empty_fixed_length_queue) {
@@ -183,12 +192,14 @@ uint8_t pop_fix_queue(void) {
         }
         else {
             result = fixed_length_queue[fixed_length_queue_front++];
-            if (fixed_length_queue_front >= QUEUE_LENGTH) fixed_length_queue_front = 0;
+            if (fixed_length_queue_front >= QUEUE_LENGTH) {
+                fixed_length_queue_front = 0;
+            }
         }
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t front_fix_queue(void) {
     uint8_t result = 0;
     if (!empty_fixed_length_queue) {
@@ -196,11 +207,11 @@ uint8_t front_fix_queue(void) {
     }
     return result;
 }
-
+/******************************************************************************/
 bool is_empty_fix_queue(void) {
     return empty_fixed_length_queue;
 }
-
+/******************************************************************************/
 void create_fixed_length_stack(void) {
     for (uint8_t i = 0; i < STACK_LENGTH; i++) {
         fixed_length_stack[i] = 0;
@@ -208,7 +219,7 @@ void create_fixed_length_stack(void) {
     fixed_length_stack_top = 0;
     empty_fixed_length_stack = true;
 }
-
+/******************************************************************************/
 bool push_fix_stack(uint8_t item) {
     bool result = false;
     if (empty_fixed_length_stack) {
@@ -228,7 +239,7 @@ bool push_fix_stack(uint8_t item) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t pop_fix_stack(void) {
     uint8_t result = 0;
     if (!empty_fixed_length_stack) {
@@ -240,7 +251,7 @@ uint8_t pop_fix_stack(void) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t top_fix_stack(void) {
     uint8_t result = 0;
     if (!empty_fixed_length_stack) {
@@ -265,7 +276,7 @@ bool create_variable_length_stack(uint8_t buf_size) {
     }
     return result;
 }
-
+/******************************************************************************/
 bool push_var_stack(uint8_t item) {
     bool result = false;
     if (empty_variable_length_stack) {
@@ -285,7 +296,7 @@ bool push_var_stack(uint8_t item) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t pop_var_stack(void) {
     uint8_t result = 0;
     if (!empty_variable_length_stack) {
@@ -297,7 +308,7 @@ uint8_t pop_var_stack(void) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t top_var_stack(void) {
     uint8_t result = 0;
     if (!empty_variable_length_stack) {
@@ -305,11 +316,11 @@ uint8_t top_var_stack(void) {
     }
     return result;
 }
-
+/******************************************************************************/
 bool is_empty_var_stack(void) {
     return empty_variable_length_stack;
 }
-
+/******************************************************************************/
 bool create_variable_length_queue(uint8_t buf_size) {
     bool result = false;
     variable_length_queue = (uint8_t*)calloc(buf_size + 1, 1);
@@ -322,7 +333,7 @@ bool create_variable_length_queue(uint8_t buf_size) {
     }
     return result;
 }
-
+/******************************************************************************/
 bool push_var_queue(uint8_t item) {
     bool result = false;
     if (empty_variable_length_queue) {
@@ -332,7 +343,9 @@ bool push_var_queue(uint8_t item) {
     }
     else {
         uint8_t old_variable_length_queue_tail = variable_length_queue_tail++;
-        if (variable_length_queue_tail >= vl_queue_length) variable_length_queue_tail = 0;
+        if (variable_length_queue_tail >= vl_queue_length) {
+            variable_length_queue_tail = 0;
+        }
         if (variable_length_queue_tail != variable_length_queue_front) {
             variable_length_queue[variable_length_queue_tail] = item;
             result = true;
@@ -344,7 +357,7 @@ bool push_var_queue(uint8_t item) {
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t pop_var_queue(void) {
     uint8_t result = 0;
     if (!empty_variable_length_queue) {
@@ -354,12 +367,14 @@ uint8_t pop_var_queue(void) {
         }
         else {
             result = variable_length_queue[variable_length_queue_front++];
-            if (variable_length_queue_front >= vl_queue_length) variable_length_queue_front = 0;
+            if (variable_length_queue_front >= vl_queue_length) {
+                variable_length_queue_front = 0;
+            }
         }
     }
     return result;
 }
-
+/******************************************************************************/
 uint8_t front_var_queue(void) {
     uint8_t result = 0;
     if (!empty_variable_length_queue) {
@@ -367,7 +382,8 @@ uint8_t front_var_queue(void) {
     }
     return result;
 }
-
+/******************************************************************************/
 bool is_empty_var_queue(void) {
     return empty_variable_length_queue;
 }
+/******************************************************************************/
