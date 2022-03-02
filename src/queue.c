@@ -1,9 +1,10 @@
 /**
-* @file    queue.c
-* @version 1.0.0
-* @authors Anton Chernov
-* @date    23/02/2022
-*/
+ * @file    queue.c
+ * @version 1.0.1
+ * @authors Anton Chernov
+ * @date    23/02/2022
+ * @date    02/03/2022
+ */
 
 /****************************** Included files ********************************/
 #include "queue.h"
@@ -150,5 +151,6 @@ bool is_empty_var_queue(void) {
 /*----------------------------------------------------------------------------*/
 void destroy_variable_length_queue(void) {
     free(variable_length_queue);
+    variable_length_queue = NULL;
 }
 /******************************************************************************/

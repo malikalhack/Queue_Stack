@@ -1,9 +1,10 @@
 /**
-* @file    stack.c
-* @version 1.0.0
-* @authors Anton Chernov
-* @date    23/02/2022
-*/
+ * @file    stack.c
+ * @version 1.0.1
+ * @authors Anton Chernov
+ * @date    23/02/2022
+ * @date    02/03/2022
+ */
 
 /****************************** Included files ********************************/
 #include "stack.h"
@@ -129,5 +130,6 @@ bool is_empty_var_stack(void) {
 /*----------------------------------------------------------------------------*/
 void destroy_variable_length_stack(void) {
     free(variable_length_stack);
+    variable_length_stack = NULL;
 }
 /******************************************************************************/
