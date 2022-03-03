@@ -1,6 +1,6 @@
 /**
 * @file    stack.h
-* @version 1.0.0
+* @version 1.2.1
 * @authors Anton Chernov
 * @date    23/02/2022
 */

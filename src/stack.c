@@ -1,6 +1,6 @@
 /**
  * @file    stack.c
- * @version 1.0.1
+ * @version 1.2.1
  * @authors Anton Chernov
  * @date    23/02/2022
  * @date    02/03/2022

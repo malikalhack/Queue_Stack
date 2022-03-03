@@ -1,6 +1,6 @@
 ﻿/**
  * @file    main.c
- * @version 1.2.0
+ * @version 1.2.1
  * @authors Anton Chernov
  * @date    16/02/2022
  * @date    23/02/2022
@@ -15,7 +15,7 @@
 #define FIXED_LENGTH_QUEUE_TEST (1)
 #define VAR_LENGTH_STACK_TEST   (1)
 #define VAR_LENGTH_QUEUE_TEST   (1)
-#define ADDITIONAL_TEST         (0)
+#define ADDITIONAL_TEST         (1)
 
 #define DISCARD_RETURN(f) ((void)f)
 /********************************* Entry point ********************************/

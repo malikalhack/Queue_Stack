@@ -1,9 +1,9 @@
 /**
  * @file    queue.c
- * @version 1.0.1
+ * @version 1.2.1
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    02/03/2022
+ * @date    03/03/2022
  */
 
 /****************************** Included files ********************************/
@@ -39,9 +39,8 @@ bool push_fix_queue(uint8_t item) {
     }
     else {
         uint8_t old_fixed_length_queue_tail = fixed_length_queue_tail++;
-        if (fixed_length_queue_tail >= QUEUE_LENGTH) {
-            fixed_length_queue_tail = 0;
-        }
+        fixed_length_queue_tail %= QUEUE_LENGTH;
+
         if (fixed_length_queue_tail != fixed_length_queue_front) {
             fixed_length_queue[fixed_length_queue_tail] = item;
             result = true;
@@ -63,9 +62,7 @@ uint8_t pop_fix_queue(void) {
         }
         else {
             result = fixed_length_queue[fixed_length_queue_front++];
-            if (fixed_length_queue_front >= QUEUE_LENGTH) {
-                fixed_length_queue_front = 0;
-            }
+            fixed_length_queue_front %= QUEUE_LENGTH;
         }
     }
     return result;
@@ -105,9 +102,8 @@ bool push_var_queue(uint8_t item) {
     }
     else {
         uint8_t old_variable_length_queue_tail = variable_length_queue_tail++;
-        if (variable_length_queue_tail >= vl_queue_length) {
-            variable_length_queue_tail = 0;
-        }
+        variable_length_queue_tail %= vl_queue_length;
+
         if (variable_length_queue_tail != variable_length_queue_front) {
             variable_length_queue[variable_length_queue_tail] = item;
             result = true;
@@ -129,9 +125,7 @@ uint8_t pop_var_queue(void) {
         }
         else {
             result = variable_length_queue[variable_length_queue_front++];
-            if (variable_length_queue_front >= vl_queue_length) {
-                variable_length_queue_front = 0;
-            }
+            variable_length_queue_front %= vl_queue_length;
         }
     }
     return result;
