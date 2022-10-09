@@ -146,13 +146,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="inc\queue.h" />
-    <ClInclude Include="inc\stack.h" />
+    <ClCompile Include="src\fl_queue.c" />
+    <ClCompile Include="src\fl_stack.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\vl_queue.c" />
+    <ClCompile Include="src\vl_stack.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.c" />
-    <ClCompile Include="src\queue.c" />
-    <ClCompile Include="src\stack.c" />
+    <ClInclude Include="inc\common.h" />
+    <ClInclude Include="inc\fl_queue.h" />
+    <ClInclude Include="inc\fl_stack.h" />
+    <ClInclude Include="inc\vl_queue.h" />
+    <ClInclude Include="inc\vl_stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

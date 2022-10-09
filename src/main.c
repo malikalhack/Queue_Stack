@@ -1,15 +1,16 @@
 ﻿/**
  * @file    main.c
- * @version 1.2.1
+ * @version 1.2.2
  * @authors Anton Chernov
  * @date    16/02/2022
- * @date    23/02/2022
+ * @date    09/10/2022
  */
 
 /****************************** Included files ********************************/
-#include "stack.h"
-#include "queue.h"
-#include <stdio.h>
+#include"fl_stack.h"
+#include"fl_queue.h"
+#include"vl_stack.h"
+#include"vl_queue.h"
 /******************************** Definition **********************************/
 #define FIXED_LENGTH_STACK_TEST (1)
 #define FIXED_LENGTH_QUEUE_TEST (1)
@@ -21,95 +22,107 @@
 /********************************* Entry point ********************************/
 int main() {
 #if FIXED_LENGTH_STACK_TEST
-    create_fixed_length_stack();
+    create_fl_stack();
+    printf("Added symbols with ASCII codes from 48 to 58 into a stack\n");
     for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
-        DISCARD_RETURN(push_fix_stack(48 + i));
+        DISCARD_RETURN(push_fl_stack(48 + i));
     }
 
 #if ADDITIONAL_TEST
-    printf("%d\n", pop_fix_stack());
-    printf("%d\n", pop_fix_stack());
-    printf("%d\n", pop_fix_stack());
-    DISCARD_RETURN(push_fix_stack(58));
-    DISCARD_RETURN(push_fix_stack(59));
-    DISCARD_RETURN(push_fix_stack(60));
+    printf("\nThe content of the fixed-length stack:\n");
+    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("%c\n", pop_fl_stack());
+    }
+    printf("Added new symbols with ASCII codes from 65 to 67\n");
+    DISCARD_RETURN(push_fl_stack(65));
+    DISCARD_RETURN(push_fl_stack(66));
+    DISCARD_RETURN(push_fl_stack(67));
 #endif
 
-    printf("The top of fixed-length stack: %d\n", top_fix_stack());
+    printf("The top of fixed-length stack: %c\n", top_fl_stack());
     printf("The content of fixed-length stack:\n");
-    while (!is_empty_fix_stack()) {
-        printf("%d\n", pop_fix_stack());
+    while (!is_empty_fl_stack()) {
+        printf("%c\n", pop_fl_stack());
     }
 #endif
 /*----------------------------------------------------------------------------*/
 #if FIXED_LENGTH_QUEUE_TEST
-    create_fixed_length_queue();
+    create_fl_queue();
+    printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
     for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
-        DISCARD_RETURN(push_fix_queue(48 + i));
+        DISCARD_RETURN(push_fl_queue(48 + i));
     }
 
 #if ADDITIONAL_TEST
-    printf("%d\n", pop_fix_queue());
-    printf("%d\n", pop_fix_queue());
-    printf("%d\n", pop_fix_queue());
-    DISCARD_RETURN(push_fix_queue(58));
-    DISCARD_RETURN(push_fix_queue(59));
-    DISCARD_RETURN(push_fix_queue(60));
+    printf("The content of fixed-length queue:\n");
+    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("%c\n", pop_fl_queue());
+    }
+    printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+    DISCARD_RETURN(push_fl_queue(65));
+    DISCARD_RETURN(push_fl_queue(66));
+    DISCARD_RETURN(push_fl_queue(67));
 #endif
 
-    printf("The front of fixed-length queue: %d\n", front_fix_queue());
+    printf("The front of fixed-length queue: %c\n", front_fl_queue());
     printf("The content of fixed-length queue:\n");
-    while (!is_empty_fix_queue()) {
-        printf("%d\n", pop_fix_queue());
+    while (!is_empty_fl_queue()) {
+        printf("%c\n", pop_fl_queue());
     }
 #endif
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_STACK_TEST
-    if (create_variable_length_stack(STACK_LENGTH)) {
+    if (create_vl_stack(STACK_LENGTH)) {
+        printf("\nAdded symbols with ASCII codes from 48 to 58 into a stack\n");
         for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
-            DISCARD_RETURN(push_var_stack(48 + i));
+            DISCARD_RETURN(push_vl_stack(48 + i));
         }
 
 #if ADDITIONAL_TEST
-        printf("%d\n", pop_var_stack());
-        printf("%d\n", pop_var_stack());
-        printf("%d\n", pop_var_stack());
-        DISCARD_RETURN(push_var_stack(58));
-        DISCARD_RETURN(push_var_stack(59));
-        DISCARD_RETURN(push_var_stack(60));
+        printf("The content of variable-length stack:\n");
+        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+            printf("%c\n", pop_vl_stack());
+        }
+        printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+        DISCARD_RETURN(push_vl_stack(65));
+        DISCARD_RETURN(push_vl_stack(66));
+        DISCARD_RETURN(push_vl_stack(67));
 #endif
 
-        printf("The top of variable-length stack: %d\n", top_var_stack());
+        printf("The top of variable-length stack: %c\n", top_vl_stack());
         printf("The content of variable-length stack:\n");
-        while (!is_empty_var_stack()) {
-            printf("%d\n", pop_var_stack());
+        while (!is_empty_vl_stack()) {
+            printf("%c\n", pop_vl_stack());
         }
 
-        destroy_variable_length_stack();
+        destroy_vl_stack();
     }
 #endif
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_QUEUE_TEST
-    if (create_variable_length_queue(STACK_LENGTH)) {
+    if (create_vl_queue(STACK_LENGTH)) {
+        printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
         for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
-            DISCARD_RETURN(push_var_queue(48 + i));
+            DISCARD_RETURN(push_vl_queue(48 + i));
         }
 
 #if ADDITIONAL_TEST
-        printf("%d\n", pop_var_queue());
-        printf("%d\n", pop_var_queue());
-        printf("%d\n", pop_var_queue());
-        DISCARD_RETURN(push_var_queue(58));
-        DISCARD_RETURN(push_var_queue(59));
-        DISCARD_RETURN(push_var_queue(60));
+        printf("The content of variable-length queue:\n");
+        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+            printf("%c\n", pop_vl_queue());
+        }
+        printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+        DISCARD_RETURN(push_vl_queue(65));
+        DISCARD_RETURN(push_vl_queue(66));
+        DISCARD_RETURN(push_vl_queue(67));
 #endif
 
-        printf("The front of variable-length queue: %d\n", front_var_queue());
+        printf("The front of variable-length queue: %c\n", front_vl_queue());
         printf("The content of variable-length queue:\n");
-        while (!is_empty_var_queue()) {
-            printf("%d\n", pop_var_queue());
+        while (!is_empty_vl_queue()) {
+            printf("%c\n", pop_vl_queue());
         }
-        destroy_variable_length_queue();
+        destroy_vl_queue();
     }
 #endif
 /*----------------------------------------------------------------------------*/
