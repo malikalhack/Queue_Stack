@@ -1,9 +1,9 @@
 ﻿/**
  * @file    main.c
- * @version 1.2.2
+ * @version 1.3.0
  * @authors Anton Chernov
  * @date    16/02/2022
- * @date    09/10/2022
+ * @date    14/10/2022
  */
 
 /****************************** Included files ********************************/
@@ -29,14 +29,23 @@ int main() {
     }
 
 #if ADDITIONAL_TEST
-    printf("\nThe content of the fixed-length stack:\n");
-    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+    printf("\nGet three characters from the stack:\n");
+    for (uint8_t i = 0; i < 3; i++) {
         printf("%c\n", pop_fl_stack());
     }
     printf("Added new symbols with ASCII codes from 65 to 67\n");
     DISCARD_RETURN(push_fl_stack(65));
     DISCARD_RETURN(push_fl_stack(66));
     DISCARD_RETURN(push_fl_stack(67));
+
+    printf("\nThe content of the fixed-length stack:\n");
+    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("%c\n", pop_fl_stack());
+    }
+    printf("Added new symbols with ASCII codes from 68 to 70\n");
+    DISCARD_RETURN(push_fl_stack(68));
+    DISCARD_RETURN(push_fl_stack(69));
+    DISCARD_RETURN(push_fl_stack(70));
 #endif
 
     printf("The top of fixed-length stack: %c\n", top_fl_stack());
@@ -54,14 +63,23 @@ int main() {
     }
 
 #if ADDITIONAL_TEST
-    printf("The content of fixed-length queue:\n");
-    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+    printf("\nGet three characters from the queue:\n");
+    for (uint8_t i = 0; i < 3; i++) {
         printf("%c\n", pop_fl_queue());
     }
-    printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+    printf("Added new symbols with ASCII codes from 65 to 67\n");
     DISCARD_RETURN(push_fl_queue(65));
     DISCARD_RETURN(push_fl_queue(66));
     DISCARD_RETURN(push_fl_queue(67));
+
+    printf("\nThe content of the fixed-length queue:\n");
+    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("%c\n", pop_fl_queue());
+    }
+    printf("Added new symbols with ASCII codes from 68 to 70\n");
+    DISCARD_RETURN(push_fl_queue(68));
+    DISCARD_RETURN(push_fl_queue(69));
+    DISCARD_RETURN(push_fl_queue(70));
 #endif
 
     printf("The front of fixed-length queue: %c\n", front_fl_queue());
@@ -79,14 +97,23 @@ int main() {
         }
 
 #if ADDITIONAL_TEST
-        printf("The content of variable-length stack:\n");
-        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("\nGet three characters from the stack:\n");
+        for (uint8_t i = 0; i < 3; i++) {
             printf("%c\n", pop_vl_stack());
         }
-        printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+        printf("Added new symbols with ASCII codes from 65 to 67\n");
         DISCARD_RETURN(push_vl_stack(65));
         DISCARD_RETURN(push_vl_stack(66));
         DISCARD_RETURN(push_vl_stack(67));
+
+        printf("\nThe content of the variable-length stack:\n");
+        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+            printf("%c\n", pop_vl_stack());
+        }
+        printf("Added new symbols with ASCII codes from 68 to 70\n");
+        DISCARD_RETURN(push_vl_stack(68));
+        DISCARD_RETURN(push_vl_stack(69));
+        DISCARD_RETURN(push_vl_stack(70));
 #endif
 
         printf("The top of variable-length stack: %c\n", top_vl_stack());
@@ -107,14 +134,23 @@ int main() {
         }
 
 #if ADDITIONAL_TEST
-        printf("The content of variable-length queue:\n");
-        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("\nGet three characters from the queue:\n");
+        for (uint8_t i = 0; i < 3; i++) {
             printf("%c\n", pop_vl_queue());
         }
-        printf("\nAdded new symbols with ASCII codes from 65 to 67\n");
+        printf("Added new symbols with ASCII codes from 65 to 67\n");
         DISCARD_RETURN(push_vl_queue(65));
         DISCARD_RETURN(push_vl_queue(66));
         DISCARD_RETURN(push_vl_queue(67));
+
+        printf("\nThe content of variable-length queue:\n");
+        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+            printf("%c\n", pop_vl_queue());
+        }
+        printf("Added new symbols with ASCII codes from 68 to 70\n");
+        DISCARD_RETURN(push_vl_queue(68));
+        DISCARD_RETURN(push_vl_queue(69));
+        DISCARD_RETURN(push_vl_queue(70));
 #endif
 
         printf("The front of variable-length queue: %c\n", front_vl_queue());
