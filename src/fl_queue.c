@@ -20,7 +20,7 @@ void create_fl_queue(void) {
     count = 0u;
 }
 /*----------------------------------------------------------------------------*/
-bool push_fl_queue(uint8_t item) {
+bool push_fl_queue(uint8_t num) {
     if (count) {
         uint8_t tail_old = tail++;
         tail %= QUEUE_LENGTH;
@@ -31,7 +31,7 @@ bool push_fl_queue(uint8_t item) {
         }
     }
     count++;
-    *(queue + tail) = item;
+    *(queue + tail) = num;
     return true;
 }
 /*----------------------------------------------------------------------------*/

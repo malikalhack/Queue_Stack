@@ -3,7 +3,7 @@
  * @version 1.3.0
  * @authors Anton Chernov
  * @date    09/10/2022
- * @date    14/10/2022
+ * @date    15/10/2022
  */
 
 #ifndef COMMON_H_
@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 /******************************** Definition **********************************/
-#define STACK_LENGTH    (10u)
-#define QUEUE_LENGTH    (10u)
+#define STACK_LENGTH    (10u) ///< Fixed stack size (is used in the test)
+#define QUEUE_LENGTH    (10u) ///< Fixed queue size (is used in the test)
 /******************************************************************************/
 #endif /* !COMMON_H_ */
