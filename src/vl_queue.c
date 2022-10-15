@@ -11,20 +11,29 @@
 #include <stdlib.h>
 #include <malloc.h>
 /****************************** Private  variables ****************************/
-uint8_t *queue;
-uint8_t queue_length;
-volatile uint8_t queue_front;
-volatile uint8_t queue_tail;
-volatile bool is_empty;
+static uint8_t *queue;
+static uint8_t length;
+static volatile uint8_t head;
+static volatile uint8_t tail;
+static volatile uint8_t count;
+/****************************** Private  functions ****************************/
+static bool queue_check(void) {
+    bool result = true;
+    if (!queue) {
+        printf("Memory access error\n");
+        result = false;
+    }
+    return result;
+}
 /********************* Application Programming Interface **********************/
 bool create_vl_queue(uint8_t buf_size) {
     bool result = false;
-    queue = (uint8_t*)calloc(buf_size + 1, 1);
-    if (queue) {
-        queue_length = buf_size;
-        queue_front = 0;
-        queue_tail = 0;
-        is_empty = true;
+    queue = (uint8_t*)calloc(buf_size, 1);
+    if (queue_check()) {
+        length = buf_size;
+        head   = 0u;
+        tail   = 0u;
+        count  = 0u;
         result = true;
     }
     return result;
@@ -32,52 +41,53 @@ bool create_vl_queue(uint8_t buf_size) {
 /*----------------------------------------------------------------------------*/
 bool push_vl_queue(uint8_t item) {
     bool result = false;
-    if (is_empty) {
-        queue[queue_front] = item;
-        is_empty = false;
+    if (queue_check()) {
+        if (count) {
+            uint8_t tail_old = tail;
+            tail++;
+            tail %= QUEUE_LENGTH;
+            if (tail == head) {
+                printf("Buffer overflow\n");
+                tail = tail_old;
+                return result;
+            }
+        }
+        count++;
+        *(queue + tail) = item;
         result = true;
-    }
-    else {
-        uint8_t old_variable_length_queue_tail = queue_tail++;
-        queue_tail %= queue_length;
-
-        if (queue_tail != queue_front) {
-            queue[queue_tail] = item;
-            result = true;
-        }
-        else {
-            queue_tail = old_variable_length_queue_tail;
-            printf("Buffer overflow\n");
-        }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 uint8_t pop_vl_queue(void) {
-    uint8_t result = 0;
-    if (!is_empty) {
-        if (queue_tail == queue_front) {
-            is_empty = true;
-            result = queue[queue_front];
+    uint8_t result = 0u;
+    if (queue_check()) {
+        if (count) {
+            result = *(queue + head);
+            if (--count) {
+                head++;
+                head %= QUEUE_LENGTH;
+            }
         }
-        else {
-            result = queue[queue_front++];
-            queue_front %= queue_length;
-        }
+        else { printf("Stack is empty\n"); }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 uint8_t front_vl_queue(void) {
     uint8_t result = 0;
-    if (!is_empty) {
-        result = queue[queue_front];
+    if (queue_check()) {
+        if (count) { result = *(queue + head); }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 bool is_empty_vl_queue(void) {
-    return is_empty;
+    bool result = true;
+    if (queue_check()) {
+        result = (count == 0u);
+    }
+    return result;
 }
 /*----------------------------------------------------------------------------*/
 void destroy_vl_queue(void) {

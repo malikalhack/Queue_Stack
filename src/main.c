@@ -19,9 +19,14 @@
 #define ADDITIONAL_TEST         (1)
 
 #define DISCARD_RETURN(f) ((void)f)
+#define TEST_START(name)\
+    printf("\n>>> Test start for a %s <<<\n\n", name)
+#define TEST_FINISH \
+    printf("***************************************************************\n")
 /********************************* Entry point ********************************/
 int main() {
 #if FIXED_LENGTH_STACK_TEST
+    TEST_START("fixed size stack");
     create_fl_stack();
     printf("Added symbols with ASCII codes from 48 to 58 into a stack\n");
     for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
@@ -53,9 +58,11 @@ int main() {
     while (!is_empty_fl_stack()) {
         printf("%c\n", pop_fl_stack());
     }
+    TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
 #if FIXED_LENGTH_QUEUE_TEST
+    TEST_START("fixed size queue");
     create_fl_queue();
     printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
     for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
@@ -87,9 +94,11 @@ int main() {
     while (!is_empty_fl_queue()) {
         printf("%c\n", pop_fl_queue());
     }
+    TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_STACK_TEST
+    TEST_START("variable size stack");
     if (create_vl_stack(STACK_LENGTH)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a stack\n");
         for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
@@ -124,9 +133,11 @@ int main() {
 
         destroy_vl_stack();
     }
+    TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_QUEUE_TEST
+    TEST_START("variable size queue");
     if (create_vl_queue(STACK_LENGTH)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
         for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
@@ -160,6 +171,7 @@ int main() {
         }
         destroy_vl_queue();
     }
+    TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
     getchar();
