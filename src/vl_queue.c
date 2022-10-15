@@ -1,9 +1,9 @@
 /**
  * @file    vl_queue.c
- * @version 1.2.2
+ * @version 1.3.0
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    09/10/2022
+ * @date    15/10/2022
  */
 
  /****************************** Included files ********************************/

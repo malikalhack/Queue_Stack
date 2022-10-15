@@ -27,7 +27,7 @@ static bool stack_check(void) {
 /********************* Application Programming Interface **********************/
 bool create_vl_stack(uint8_t buf_size) {
     bool result = false;
-    stack = (uint8_t*)calloc(buf_size + 1, 1);
+    stack = (uint8_t*)calloc(buf_size, 1);
     if (stack_check()) {
         s_size = buf_size;
         count  = 0u;

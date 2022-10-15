@@ -3,7 +3,7 @@
  * @version 1.3.0
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    14/10/2022
+ * @date    15/10/2022
  */
 
 /****************************** Included files ********************************/
@@ -21,21 +21,18 @@ void create_fl_queue(void) {
 }
 /*----------------------------------------------------------------------------*/
 bool push_fl_queue(uint8_t item) {
-    bool result = false;
     if (count) {
-        uint8_t tail_old = tail;
-        tail++;
+        uint8_t tail_old = tail++;
         tail %= QUEUE_LENGTH;
         if (tail == head) {
             printf("Buffer overflow\n");
             tail = tail_old;
-            return result;
+            return false;
         }
     }
     count++;
     *(queue + tail) = item;
-    result = true;
-    return result;
+    return true;
 }
 /*----------------------------------------------------------------------------*/
 uint8_t pop_fl_queue(void) {
