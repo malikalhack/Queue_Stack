@@ -1,9 +1,9 @@
 /**
  * @file    vl_stack.c
- * @version 1.2.2
+ * @version 1.3.0
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    09/10/2022
+ * @date    14/10/2022
  */
 
  /****************************** Included files ********************************/
@@ -11,19 +11,27 @@
 #include <stdlib.h>
 #include <malloc.h>
 /****************************** Private  variables ****************************/
-uint8_t *stack;
-uint8_t stack_length;
-volatile uint8_t stack_top;
-volatile bool is_empty;
+static uint8_t *stack;
+static uint8_t s_size;
+static volatile uint8_t top;
+static volatile uint8_t count;
+/****************************** Private  functions ****************************/
+static bool stack_check(void) {
+    bool result = true;
+    if (!stack) {
+        printf("Memory access error\n");
+        result = false;
+    }
+    return result;
+}
 /********************* Application Programming Interface **********************/
 bool create_vl_stack(uint8_t buf_size) {
     bool result = false;
-    stack = (uint8_t*)calloc(buf_size + 1, 1);
-    if (stack) {
-        stack_length = buf_size;
-        stack_top = 0;
-        is_empty = true;
-
+    stack = (uint8_t*)calloc(buf_size, 1);
+    if (stack_check()) {
+        s_size = buf_size;
+        count  = 0u;
+        top    = 0u;
         result = true;
     }
     return result;
@@ -31,46 +39,44 @@ bool create_vl_stack(uint8_t buf_size) {
 /*----------------------------------------------------------------------------*/
 bool push_vl_stack(uint8_t item) {
     bool result = false;
-    if (is_empty) {
-        stack[stack_top] = item;
-        is_empty = false;
-        result = true;
-    }
-    else {
-        if (++stack_top < stack_length) {
-            stack[stack_top] = item;
+    if (stack_check()) {
+        if (top < STACK_LENGTH - 1u) {
+            if (count++) { stack[++top] = item; }
+            else { stack[top] = item; }
             result = true;
         }
-        else {
-            stack_top = stack_length - 1;
-            printf("Buffer overflow\n");
-        }
+        else { printf("Buffer overflow\n"); }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 uint8_t pop_vl_stack(void) {
-    uint8_t result = 0;
-    if (!is_empty) {
-        if (!stack_top) {
-            is_empty = true;
-            result = stack[stack_top];
+    uint8_t result = 0u;
+    if (stack_check()) {
+        if (count) {
+            if (!top) { result = stack[top]; }
+            else { result = stack[top--]; }
+            count--;
         }
-        else result = stack[stack_top--];
+        else { printf("Stack is empty\n"); }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 uint8_t top_vl_stack(void) {
     uint8_t result = 0;
-    if (!is_empty) {
-        result = stack[stack_top];
+    if (stack_check()) {
+        if (count) { result = stack[top]; }
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
 bool is_empty_vl_stack(void) {
-    return is_empty;
+    bool result = true;
+    if (stack_check()) {
+        result = (count == 0u);
+    }
+    return result;
 }
 /*----------------------------------------------------------------------------*/
 void destroy_vl_stack(void) {
