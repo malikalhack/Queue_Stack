@@ -1,6 +1,6 @@
 /**
  * @file    vl_stack.h
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    09/10/2022
  */

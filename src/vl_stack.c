@@ -1,9 +1,9 @@
 /**
  * @file    vl_stack.c
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    14/10/2022
+ * @date    18/10/2022
  */
 
  /****************************** Included files ********************************/
@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 /****************************** Private  variables ****************************/
-static uint8_t *stack;
+static data_t *stack;
 static uint8_t s_size;
 static volatile uint8_t top;
 static volatile uint8_t count;
@@ -27,7 +27,7 @@ static bool stack_check(void) {
 /********************* Application Programming Interface **********************/
 bool create_vl_stack(uint8_t buf_size) {
     bool result = false;
-    stack = (uint8_t*)calloc(buf_size, 1);
+    stack = (data_t*)calloc(buf_size, 1);
     if (stack_check()) {
         s_size = buf_size;
         count  = 0u;
@@ -40,7 +40,7 @@ bool create_vl_stack(uint8_t buf_size) {
 bool push_vl_stack(uint8_t item) {
     bool result = false;
     if (stack_check()) {
-        if (top < STACK_LENGTH - 1u) {
+        if (top < s_size - 1u) {
             if (count++) { stack[++top] = item; }
             else { stack[top] = item; }
             result = true;

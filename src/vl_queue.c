@@ -1,9 +1,9 @@
 /**
  * @file    vl_queue.c
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    15/10/2022
+ * @date    18/10/2022
  */
 
  /****************************** Included files ********************************/
@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 /****************************** Private  variables ****************************/
-static uint8_t *queue;
+static data_t *queue;
 static uint8_t length;
 static volatile uint8_t head;
 static volatile uint8_t tail;
@@ -45,7 +45,7 @@ bool push_vl_queue(uint8_t item) {
         if (count) {
             uint8_t tail_old = tail;
             tail++;
-            tail %= QUEUE_LENGTH;
+            tail %= length;
             if (tail == head) {
                 printf("Buffer overflow\n");
                 tail = tail_old;
@@ -66,7 +66,7 @@ uint8_t pop_vl_queue(void) {
             result = *(queue + head);
             if (--count) {
                 head++;
-                head %= QUEUE_LENGTH;
+                head %= length;
             }
         }
         else { printf("Stack is empty\n"); }

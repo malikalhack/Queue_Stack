@@ -1,6 +1,6 @@
 /**
- * @file    stack.c
- * @version 1.3.0
+ * @file    fl_stack.c
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    23/02/2022
  * @date    14/10/2022

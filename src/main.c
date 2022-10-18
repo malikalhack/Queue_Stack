@@ -1,6 +1,6 @@
 ﻿/**
  * @file    main.c
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    16/02/2022
  * @date    15/10/2022

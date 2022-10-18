@@ -1,9 +1,9 @@
 /**
  * @file    common.h
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    09/10/2022
- * @date    15/10/2022
+ * @date    18/10/2022
  */
 
 #ifndef COMMON_H_
@@ -13,6 +13,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 /******************************** Definition **********************************/
+typedef uint8_t data_t;
+
 #define STACK_LENGTH    (10u) ///< Fixed stack size (is used in the test)
 #define QUEUE_LENGTH    (10u) ///< Fixed queue size (is used in the test)
 /******************************************************************************/
