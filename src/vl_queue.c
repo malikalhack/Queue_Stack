@@ -12,10 +12,10 @@
 #include <malloc.h>
 /****************************** Private  variables ****************************/
 static data_t *queue;
-static uint8_t length;
-static volatile uint8_t head;
-static volatile uint8_t tail;
-static volatile uint8_t count;
+static bsize_t length;
+static volatile index_t head;
+static volatile index_t tail;
+static volatile bsize_t count;
 /****************************** Private  functions ****************************/
 static bool queue_check(void) {
     bool result = true;
@@ -26,24 +26,24 @@ static bool queue_check(void) {
     return result;
 }
 /********************* Application Programming Interface **********************/
-bool create_vl_queue(uint8_t buf_size) {
+bool create_vl_queue(bsize_t buf_size) {
     bool result = false;
-    queue = (uint8_t*)calloc(buf_size, 1);
+    queue = (data_t*)calloc(buf_size, sizeof(data_t));
     if (queue_check()) {
         length = buf_size;
-        head   = 0u;
-        tail   = 0u;
-        count  = 0u;
+        head   = 0;
+        tail   = 0;
+        count  = 0;
         result = true;
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
-bool push_vl_queue(uint8_t item) {
+bool push_vl_queue(data_t num) {
     bool result = false;
     if (queue_check()) {
         if (count) {
-            uint8_t tail_old = tail;
+            index_t tail_old = tail;
             tail++;
             tail %= length;
             if (tail == head) {
@@ -53,14 +53,14 @@ bool push_vl_queue(uint8_t item) {
             }
         }
         count++;
-        *(queue + tail) = item;
+        *(queue + tail) = num;
         result = true;
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t pop_vl_queue(void) {
-    uint8_t result = 0u;
+data_t pop_vl_queue(void) {
+    data_t result = 0;
     if (queue_check()) {
         if (count) {
             result = *(queue + head);
@@ -74,8 +74,8 @@ uint8_t pop_vl_queue(void) {
     return result;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t front_vl_queue(void) {
-    uint8_t result = 0;
+data_t front_vl_queue(void) {
+    data_t result = 0;
     if (queue_check()) {
         if (count) { result = *(queue + head); }
     }
@@ -85,7 +85,7 @@ uint8_t front_vl_queue(void) {
 bool is_empty_vl_queue(void) {
     bool result = true;
     if (queue_check()) {
-        result = (count == 0u);
+        result = (count == 0);
     }
     return result;
 }

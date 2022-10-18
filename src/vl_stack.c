@@ -12,9 +12,9 @@
 #include <malloc.h>
 /****************************** Private  variables ****************************/
 static data_t *stack;
-static uint8_t s_size;
-static volatile uint8_t top;
-static volatile uint8_t count;
+static bsize_t s_size;
+static volatile index_t top;
+static volatile bsize_t count;
 /****************************** Private  functions ****************************/
 static bool stack_check(void) {
     bool result = true;
@@ -25,24 +25,24 @@ static bool stack_check(void) {
     return result;
 }
 /********************* Application Programming Interface **********************/
-bool create_vl_stack(uint8_t buf_size) {
+bool create_vl_stack(bsize_t buf_size) {
     bool result = false;
-    stack = (data_t*)calloc(buf_size, 1);
+    stack = (data_t*)calloc(buf_size, sizeof(data_t));
     if (stack_check()) {
         s_size = buf_size;
-        count  = 0u;
-        top    = 0u;
+        count  = 0;
+        top    = 0;
         result = true;
     }
     return result;
 }
 /*----------------------------------------------------------------------------*/
-bool push_vl_stack(uint8_t item) {
+bool push_vl_stack(data_t num) {
     bool result = false;
     if (stack_check()) {
         if (top < s_size - 1u) {
-            if (count++) { stack[++top] = item; }
-            else { stack[top] = item; }
+            if (count++) { stack[++top] = num; }
+            else { stack[top] = num; }
             result = true;
         }
         else { printf("Buffer overflow\n"); }
@@ -50,8 +50,8 @@ bool push_vl_stack(uint8_t item) {
     return result;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t pop_vl_stack(void) {
-    uint8_t result = 0u;
+data_t pop_vl_stack(void) {
+    data_t result = 0;
     if (stack_check()) {
         if (count) {
             if (!top) { result = stack[top]; }
@@ -63,8 +63,8 @@ uint8_t pop_vl_stack(void) {
     return result;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t top_vl_stack(void) {
-    uint8_t result = 0;
+data_t top_vl_stack(void) {
+    data_t result = 0;
     if (stack_check()) {
         if (count) { result = stack[top]; }
     }
@@ -74,7 +74,7 @@ uint8_t top_vl_stack(void) {
 bool is_empty_vl_stack(void) {
     bool result = true;
     if (stack_check()) {
-        result = (count == 0u);
+        result = (count == 0);
     }
     return result;
 }

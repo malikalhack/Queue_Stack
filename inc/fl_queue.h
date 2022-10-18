@@ -3,7 +3,7 @@
  * @version 1.3.1
  * @authors Anton Chernov
  * @date    09/10/2022
- * @date    15/10/2022
+ * @date    18/10/2022
  */
 
 #ifndef FL_QUEUE_H_
@@ -26,19 +26,19 @@ void create_fl_queue(void);
  * @returns a boolean result that reports the success or failure
  * of placing the element on the queue.
  */
-bool push_fl_queue(uint8_t);
+bool push_fl_queue(data_t);
 
 /**
  * @brief The function of poping an element in the queue.
  * @returns the element of the queue.
  */
-uint8_t pop_fl_queue(void);
+data_t pop_fl_queue(void);
 
 /**
  * @brief The function to access the front element of the queue.
  * @returns the front element of the queue.
  */
-uint8_t front_fl_queue(void);
+data_t front_fl_queue(void);
 
 /**
  * @brief The function of checking the queue for emptiness.
