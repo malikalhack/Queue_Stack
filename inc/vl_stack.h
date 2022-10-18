@@ -1,8 +1,9 @@
 /**
  * @file    vl_stack.h
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    09/10/2022
+ * @date    18/10/2022
  */
 
 #ifndef VL_STACK_H_
@@ -17,7 +18,7 @@
  * variables. Attempting to use the stack without first calling this function
  * will result in an error.
  */
-bool create_vl_stack(uint8_t);
+bool create_vl_stack(bsize_t);
 
 /**
  * @brief Stack destroy function.
@@ -33,19 +34,19 @@ void destroy_vl_stack(void);
  * @returns a boolean result that reports the success or failure
  * of placing the element on the stack.
  */
-bool push_vl_stack(uint8_t);
+bool push_vl_stack(data_t);
 
 /**
  * @brief The function of poping an element in the stack.
  * @returns the element of the stack.
  */
-uint8_t pop_vl_stack(void);
+data_t pop_vl_stack(void);
 
 /**
  * @brief The function to access the top element of the stack.
  * @returns the top element of the stack.
  */
-uint8_t top_vl_stack(void);
+data_t top_vl_stack(void);
 
 /**
  * @brief The function of checking the stack for emptiness.

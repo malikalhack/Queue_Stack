@@ -1,9 +1,9 @@
 ﻿/**
  * @file    main.c
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    16/02/2022
- * @date    15/10/2022
+ * @date    18/10/2022
  */
 
 /****************************** Included files ********************************/
@@ -12,9 +12,9 @@
 #include"vl_stack.h"
 #include"vl_queue.h"
 /******************************** Definition **********************************/
-#define FIXED_LENGTH_STACK_TEST (1)
+#define FIXED_SIZE_STACK_TEST   (1)
 #define FIXED_LENGTH_QUEUE_TEST (1)
-#define VAR_LENGTH_STACK_TEST   (1)
+#define VAR_SIZE_STACK_TEST     (1)
 #define VAR_LENGTH_QUEUE_TEST   (1)
 #define ADDITIONAL_TEST         (1)
 
@@ -25,11 +25,11 @@
     printf("***************************************************************\n")
 /********************************* Entry point ********************************/
 int main() {
-#if FIXED_LENGTH_STACK_TEST
-    TEST_START("fixed size stack");
+#if FIXED_SIZE_STACK_TEST
+    TEST_START("fixed-size stack (LIFO)");
     create_fl_stack();
     printf("Added symbols with ASCII codes from 48 to 58 into a stack\n");
-    for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
+    for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
         DISCARD_RETURN(push_fl_stack(48 + i));
     }
 
@@ -43,8 +43,8 @@ int main() {
     DISCARD_RETURN(push_fl_stack(66));
     DISCARD_RETURN(push_fl_stack(67));
 
-    printf("\nThe content of the fixed-length stack:\n");
-    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+    printf("\nThe content of the fixed-size stack:\n");
+    for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
         printf("%c\n", pop_fl_stack());
     }
     printf("Added new symbols with ASCII codes from 68 to 70\n");
@@ -53,8 +53,8 @@ int main() {
     DISCARD_RETURN(push_fl_stack(70));
 #endif
 
-    printf("The top of fixed-length stack: %c\n", top_fl_stack());
-    printf("The content of fixed-length stack:\n");
+    printf("The top of fixed-size stack: %c\n", top_fl_stack());
+    printf("The content of fixed-size stack:\n");
     while (!is_empty_fl_stack()) {
         printf("%c\n", pop_fl_stack());
     }
@@ -62,10 +62,10 @@ int main() {
 #endif
 /*----------------------------------------------------------------------------*/
 #if FIXED_LENGTH_QUEUE_TEST
-    TEST_START("fixed size queue");
+    TEST_START("fixed-length queue (FIFO)");
     create_fl_queue();
     printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
-    for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
+    for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
         DISCARD_RETURN(push_fl_queue(48 + i));
     }
 
@@ -80,7 +80,7 @@ int main() {
     DISCARD_RETURN(push_fl_queue(67));
 
     printf("\nThe content of the fixed-length queue:\n");
-    for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+    for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
         printf("%c\n", pop_fl_queue());
     }
     printf("Added new symbols with ASCII codes from 68 to 70\n");
@@ -97,11 +97,11 @@ int main() {
     TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
-#if VAR_LENGTH_STACK_TEST
-    TEST_START("variable size stack");
-    if (create_vl_stack(STACK_LENGTH)) {
+#if VAR_SIZE_STACK_TEST
+    TEST_START("variable-size stack (LIFO)");
+    if (create_vl_stack(STACK_SIZE)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a stack\n");
-        for (uint8_t i = 0; i < (STACK_LENGTH + 1); i++) {
+        for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
             DISCARD_RETURN(push_vl_stack(48 + i));
         }
 
@@ -115,8 +115,8 @@ int main() {
         DISCARD_RETURN(push_vl_stack(66));
         DISCARD_RETURN(push_vl_stack(67));
 
-        printf("\nThe content of the variable-length stack:\n");
-        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        printf("\nThe content of the variable-size stack:\n");
+        for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
             printf("%c\n", pop_vl_stack());
         }
         printf("Added new symbols with ASCII codes from 68 to 70\n");
@@ -125,8 +125,8 @@ int main() {
         DISCARD_RETURN(push_vl_stack(70));
 #endif
 
-        printf("The top of variable-length stack: %c\n", top_vl_stack());
-        printf("The content of variable-length stack:\n");
+        printf("The top of variable-size stack: %c\n", top_vl_stack());
+        printf("The content of variable-size stack:\n");
         while (!is_empty_vl_stack()) {
             printf("%c\n", pop_vl_stack());
         }
@@ -137,10 +137,10 @@ int main() {
 #endif
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_QUEUE_TEST
-    TEST_START("variable size queue");
-    if (create_vl_queue(STACK_LENGTH)) {
+    TEST_START("variable-length queue (FIFO)");
+    if (create_vl_queue(QUEUE_LENGTH)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
-        for (uint8_t i = 0; i < (QUEUE_LENGTH + 1); i++) {
+        for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
             DISCARD_RETURN(push_vl_queue(48 + i));
         }
 
@@ -155,7 +155,7 @@ int main() {
         DISCARD_RETURN(push_vl_queue(67));
 
         printf("\nThe content of variable-length queue:\n");
-        for (uint8_t i = 0; i < STACK_LENGTH + 1; i++) {
+        for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
             printf("%c\n", pop_vl_queue());
         }
         printf("Added new symbols with ASCII codes from 68 to 70\n");

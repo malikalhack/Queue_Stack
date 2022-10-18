@@ -1,28 +1,28 @@
 /**
  * @file    fl_queue.c
- * @version 1.3.0
+ * @version 1.3.1
  * @authors Anton Chernov
  * @date    23/02/2022
- * @date    15/10/2022
+ * @date    18/10/2022
  */
 
 /****************************** Included files ********************************/
 #include "common.h"
 /****************************** Private  variables ****************************/
-static uint8_t queue[QUEUE_LENGTH];
-static volatile uint8_t head;
-static volatile uint8_t tail;
-static volatile uint8_t count;
+static data_t queue[QUEUE_LENGTH];
+static volatile index_t head;
+static volatile index_t tail;
+static volatile bsize_t count;
 /********************* Application Programming Interface **********************/
 void create_fl_queue(void) {
-    head  = 0u;
-    tail  = 0u;
-    count = 0u;
+    head  = 0;
+    tail  = 0;
+    count = 0;
 }
 /*----------------------------------------------------------------------------*/
-bool push_fl_queue(uint8_t num) {
+bool push_fl_queue(data_t num) {
     if (count) {
-        uint8_t tail_old = tail++;
+        index_t tail_old = tail++;
         tail %= QUEUE_LENGTH;
         if (tail == head) {
             printf("Buffer overflow\n");
@@ -35,8 +35,8 @@ bool push_fl_queue(uint8_t num) {
     return true;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t pop_fl_queue(void) {
-    uint8_t result = 0u;
+data_t pop_fl_queue(void) {
+    data_t result = 0;
     if (count) {
         result = *(queue + head);
         if (--count) {
@@ -44,15 +44,15 @@ uint8_t pop_fl_queue(void) {
             head %= QUEUE_LENGTH;
         }
     }
-    else { printf("Stack is empty\n"); }
+    else { printf("Queue is empty\n"); }
     return result;
 }
 /*----------------------------------------------------------------------------*/
-uint8_t front_fl_queue(void) {
-    return (count) ? queue[head] : 0u;
+data_t front_fl_queue(void) {
+    return (count) ? queue[head] : 0;
 }
 /*----------------------------------------------------------------------------*/
 bool is_empty_fl_queue(void) {
-    return (count == 0u);
+    return (count == 0);
 }
 /******************************************************************************/
