@@ -12,9 +12,9 @@
 #include"vl_stack.h"
 #include"vl_queue.h"
 /******************************** Definition **********************************/
-#define FIXED_LENGTH_STACK_TEST (1)
+#define FIXED_SIZE_STACK_TEST   (1)
 #define FIXED_LENGTH_QUEUE_TEST (1)
-#define VAR_LENGTH_STACK_TEST   (1)
+#define VAR_SIZE_STACK_TEST     (1)
 #define VAR_LENGTH_QUEUE_TEST   (1)
 #define ADDITIONAL_TEST         (1)
 
@@ -25,7 +25,7 @@
     printf("***************************************************************\n")
 /********************************* Entry point ********************************/
 int main() {
-#if FIXED_LENGTH_STACK_TEST
+#if FIXED_SIZE_STACK_TEST
     TEST_START("fixed-size stack (LIFO)");
     create_fl_stack();
     printf("Added symbols with ASCII codes from 48 to 58 into a stack\n");
@@ -80,7 +80,7 @@ int main() {
     DISCARD_RETURN(push_fl_queue(67));
 
     printf("\nThe content of the fixed-length queue:\n");
-    for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
+    for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
         printf("%c\n", pop_fl_queue());
     }
     printf("Added new symbols with ASCII codes from 68 to 70\n");
@@ -97,7 +97,7 @@ int main() {
     TEST_FINISH;
 #endif
 /*----------------------------------------------------------------------------*/
-#if VAR_LENGTH_STACK_TEST
+#if VAR_SIZE_STACK_TEST
     TEST_START("variable-size stack (LIFO)");
     if (create_vl_stack(STACK_SIZE)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a stack\n");
@@ -138,7 +138,7 @@ int main() {
 /*----------------------------------------------------------------------------*/
 #if VAR_LENGTH_QUEUE_TEST
     TEST_START("variable-length queue (FIFO)");
-    if (create_vl_queue(STACK_SIZE)) {
+    if (create_vl_queue(QUEUE_LENGTH)) {
         printf("\nAdded symbols with ASCII codes from 48 to 58 into a queue\n");
         for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
             DISCARD_RETURN(push_vl_queue(48 + i));
@@ -155,7 +155,7 @@ int main() {
         DISCARD_RETURN(push_vl_queue(67));
 
         printf("\nThe content of variable-length queue:\n");
-        for (uint8_t i = 0; i < STACK_SIZE + 1; i++) {
+        for (uint8_t i = 0; i < QUEUE_LENGTH + 1; i++) {
             printf("%c\n", pop_vl_queue());
         }
         printf("Added new symbols with ASCII codes from 68 to 70\n");
