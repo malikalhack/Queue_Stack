@@ -44,7 +44,7 @@ data_t pop_fl_queue(void) {
             head %= QUEUE_LENGTH;
         }
     }
-    else { printf("Stack is empty\n"); }
+    else { printf("Queue is empty\n"); }
     return result;
 }
 /*----------------------------------------------------------------------------*/

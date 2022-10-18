@@ -69,7 +69,7 @@ data_t pop_vl_queue(void) {
                 head %= length;
             }
         }
-        else { printf("Stack is empty\n"); }
+        else { printf("Queue is empty\n"); }
     }
     return result;
 }

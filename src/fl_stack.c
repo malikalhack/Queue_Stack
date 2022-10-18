@@ -9,7 +9,7 @@
 /****************************** Included files ********************************/
 #include "common.h"
 /****************************** Private  variables ****************************/
-static data_t stack[STACK_LENGTH];
+static data_t stack[STACK_SIZE];
 static volatile index_t top;
 static volatile bsize_t count;
 /********************* Application Programming Interface **********************/
@@ -20,7 +20,7 @@ void create_fl_stack(void) {
 /*----------------------------------------------------------------------------*/
 bool push_fl_stack(data_t num) {
     bool result = false;
-    if (top < STACK_LENGTH - 1u) {
+    if (top < STACK_SIZE - 1u) {
         if (count++) { stack[++top] = num; }
         else { stack[top] = num; }
         result = true;
